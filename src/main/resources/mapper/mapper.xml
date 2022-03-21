@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!-- namespace:改mapper.xml映射文件的唯一标识并且必须和数据处理层的接口的路径相同-->
+<mapper namespace="com.example.demo.dao.ExcelDao">
+    <!--   必须添加property属性 ，区别于是否加主键-->
+    <resultMap id="ExcelResultMap1" type="com.example.demo.entity.ExcelSheet1" >
+        <result column="Report Line Name" jdbcType="VARCHAR" property="reportLineName" />
+        <result column="blank1" jdbcType="VARCHAR" property="blank1" />
+        <result column="MTD Actual" jdbcType="DOUBLE" property="mtdActual" />
+        <result column="MTD Plan" jdbcType="DOUBLE" property="mtdPlan" />
+        <result column="Change vs. Plan1" jdbcType="DOUBLE" property="changeVsPlan1" />
+        <result column="Last Year MTD Actual" jdbcType="DOUBLE" property="lastYearMtdActual" />
+        <result column="Change vs. Last Year1" jdbcType="DOUBLE" property="changeVsLastYear1" />
+        <result column="blank2" jdbcType="VARCHAR" property="blank2" />
+        <result column="YTD Actual" jdbcType="DOUBLE" property="ytdActual" />
+        <result column="YTD Plan" jdbcType="DOUBLE" property="ytdPlan" />
+        <result column="Change vs. Plan2" jdbcType="DOUBLE" property="changeVsPlan2" />
+        <result column="Last Year YTD Actual" jdbcType="DOUBLE" property="lastYearYtdActual" />
+        <result column="Change vs. Last Year2" jdbcType="DOUBLE" property="changeVsLastYear2" />
+        <result column="blank3" jdbcType="VARCHAR" property="blank3" />
+        <result column="Left in Plan" jdbcType="DOUBLE" property="leftInPlan" />
+        <result column="% of Plan Remaining" jdbcType="DOUBLE" property="planRemaining" />
+        <result column="Jan" jdbcType="DOUBLE" property="jan" />
+        <result column="Feb" jdbcType="DOUBLE" property="feb" />
+        <result column="Mar" jdbcType="DOUBLE" property="mar" />
+        <result column="Apr" jdbcType="DOUBLE" property="apr" />
+        <result column="May" jdbcType="DOUBLE" property="may" />
+        <result column="Jun" jdbcType="DOUBLE" property="jun" />
+        <result column="Jul" jdbcType="DOUBLE" property="jul" />
+        <result column="Aug" jdbcType="DOUBLE" property="aug" />
+        <result column="Sep" jdbcType="DOUBLE" property="sep" />
+        <result column="Oct" jdbcType="DOUBLE" property="oct" />
+        <result column="Nov" jdbcType="DOUBLE" property="nov" />
+        <result column="Dec" jdbcType="DOUBLE" property="dec" />
+        <result column="Actual" jdbcType="DOUBLE" property="actual" />
+        <result column="Jan1" jdbcType="DOUBLE" property="jan1" />
+        <result column="Feb1" jdbcType="DOUBLE" property="feb1" />
+        <result column="Mar1" jdbcType="DOUBLE" property="mar1" />
+        <result column="Apr1" jdbcType="DOUBLE" property="apr1" />
+        <result column="May1" jdbcType="DOUBLE" property="may1" />
+        <result column="Jun1" jdbcType="DOUBLE" property="jun1" />
+        <result column="Jul1" jdbcType="DOUBLE" property="jul1" />
+        <result column="Aug1" jdbcType="DOUBLE" property="aug1" />
+        <result column="Sep1" jdbcType="DOUBLE" property="sep1" />
+        <result column="Oct1" jdbcType="DOUBLE" property="oct1" />
+        <result column="Nov1" jdbcType="DOUBLE" property="nov1" />
+        <result column="Dec1" jdbcType="DOUBLE" property="dec1" />
+        <result column="Plan" jdbcType="DOUBLE" property="plan" />
+    </resultMap>
+    <select id="getAllExcelDataBySheet1" resultMap="ExcelResultMap1">
+        select * from sheet1 order by id
+    </select>
+
+    <resultMap id="ExcelResultMap2" type="com.example.demo.entity.ExcelSheet2" >
+        <result column="Report Line Name" jdbcType="VARCHAR" property="report" />
+        <result column="Account Name" jdbcType="VARCHAR" property="account" />
+        <result column="Vendor Name" jdbcType="VARCHAR" property="vendor" />
+        <result column="blank1" jdbcType="VARCHAR" property="blk1" />
+        <result column="MTD Actual" jdbcType="DOUBLE" property="mtdActual" />
+        <result column="Last Year MTD Actual" jdbcType="DOUBLE" property="lYMtdActual" />
+        <result column="Change vs. Last Year" jdbcType="DOUBLE" property="changeVsLY" />
+        <result column="blank2" jdbcType="VARCHAR" property="blk2" />
+        <result column="YTD Actual" jdbcType="DOUBLE" property="ytdActual" />
+        <result column="Last Year YTD Actual" jdbcType="DOUBLE" property="lYYtdActual" />
+        <result column="Change vs. Last Year1" jdbcType="DOUBLE" property="changeVsLY1" />
+        <result column="blank3" jdbcType="VARCHAR" property="blk3" />
+        <result column="Jan" jdbcType="DOUBLE" property="jan" />
+        <result column="Feb" jdbcType="DOUBLE" property="feb" />
+        <result column="Mar" jdbcType="DOUBLE" property="mar" />
+        <result column="Apr" jdbcType="DOUBLE" property="apr" />
+        <result column="May" jdbcType="DOUBLE" property="may" />
+        <result column="Jun" jdbcType="DOUBLE" property="jun" />
+        <result column="Jul" jdbcType="DOUBLE" property="jul" />
+        <result column="Aug" jdbcType="DOUBLE" property="aug" />
+        <result column="Sep" jdbcType="DOUBLE" property="sep" />
+        <result column="Oct" jdbcType="DOUBLE" property="oct" />
+        <result column="Nov" jdbcType="DOUBLE" property="nov" />
+        <result column="Dec" jdbcType="DOUBLE" property="dec" />
+        <result column="YTD Actual1" jdbcType="DOUBLE" property="ytdActual1" />
+    </resultMap>
+    <select id="getAllExcelDataBySheet2" resultMap="ExcelResultMap2">
+        select * from sheet2 order by id
+    </select>
+
+    <resultMap id="ExcelResultMap3" type="com.example.demo.entity.ExcelSheet3" >
+        <result column="Vendor Name" jdbcType="VARCHAR" property="vendor" />
+        <result column="Account Name" jdbcType="VARCHAR" property="account" />
+        <result column="blank1" jdbcType="VARCHAR" property="blk1" />
+        <result column="MTD Actual" jdbcType="DOUBLE" property="mtdActual" />
+        <result column="Last Year MTD Actual" jdbcType="DOUBLE" property="lYMtdActual" />
+        <result column="Change vs. Last Year" jdbcType="DOUBLE" property="changeVsLY" />
+        <result column="blank2" jdbcType="VARCHAR" property="blk2" />
+        <result column="YTD Actual" jdbcType="DOUBLE" property="ytdActual" />
+        <result column="Last Year YTD Actual" jdbcType="DOUBLE" property="lYYtdActual" />
+        <result column="Change vs. Last Year1" jdbcType="DOUBLE" property="changeVsLY1" />
+        <result column="blank3" jdbcType="VARCHAR" property="blk3" />
+        <result column="Jan" jdbcType="DOUBLE" property="jan" />
+        <result column="Feb" jdbcType="DOUBLE" property="feb" />
+        <result column="Mar" jdbcType="DOUBLE" property="mar" />
+        <result column="Apr" jdbcType="DOUBLE" property="apr" />
+        <result column="May" jdbcType="DOUBLE" property="may" />
+        <result column="Jun" jdbcType="DOUBLE" property="jun" />
+        <result column="Jul" jdbcType="DOUBLE" property="jul" />
+        <result column="Aug" jdbcType="DOUBLE" property="aug" />
+        <result column="Sep" jdbcType="DOUBLE" property="sep" />
+        <result column="Oct" jdbcType="DOUBLE" property="oct" />
+        <result column="Nov" jdbcType="DOUBLE" property="nov" />
+        <result column="Dec" jdbcType="DOUBLE" property="dec" />
+        <result column="YTD Actual1" jdbcType="DOUBLE" property="ytdActual1" />
+    </resultMap>
+    <select id="getAllExcelDataBySheet3" resultMap="ExcelResultMap3">
+        select * from sheet3 order by id
+    </select>
+
+
+</mapper>
