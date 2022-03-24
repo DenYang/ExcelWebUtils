@@ -22,7 +22,7 @@ import static com.example.demo.utils.ExcelUtils.ModelToExcel;
 
 @Controller
 public class TaskController {
-    int i = 0;
+
     private EmailService emailService;
     private ExcelService excelService;
     private static final SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
@@ -38,19 +38,17 @@ public class TaskController {
     }
 
     public void sendMailAtTime(){
-        log.debug("num",i);
-        i ++;
-        String subject = "这是第"+i+"次发送邮件，请您注意安全！";
-        String text = "现在是第"+i+"次发送，目前时间是"+format.format(new Date());
+
+        String subject = "发送邮件！";
+        String text = "现在时间是"+format.format(new Date());
         emailService.sendSimpleMail("1308467355@qq.com",subject,text);
     }
 
-    @Scheduled(cron = "0 0,5,10,13,15,20,25,30,35,40,45,50,55 9,10,11,12,16,17 * * ? ")
+    //@Scheduled(cron = "0 0,5,10,13,15,20,25,30,35,40,45,50,55 9,10,11,12,16,17 * * ? ")
     public void sendFileMailAtTime(){
-        i++;
-        log.debug("sum:",i);
-        String subject = "您有一个新文件需要处理";
-        String text = "附件"+i+":目前时间是:"+format.format(new Date());
+
+        String subject = "主题：带附件的邮件";
+        String text = "目前时间是:"+format.format(new Date());
         List<ExcelSheet1> excelSheet1List = excelService.getAllExcelDataBySheet1();
         List<ExcelSheet2> excelSheet2List = excelService.getAllExcelDataBySheet2();
         List<ExcelSheet3> excelSheet3List = excelService.getAllExcelDataBySheet3();
@@ -59,7 +57,7 @@ public class TaskController {
             File file = ModelToExcel("D:\\IdeaProjects\\MyWeb\\src\\main\\resources\\excelFile\\测试.xls",1,46,42,2,1, (ArrayList) excelSheet1List);
             File file1 = ModelToExcel(file.getCanonicalPath(),2,48,25,3,1, (ArrayList) excelSheet2List);
             File file2 = ModelToExcel(file1.getCanonicalPath(),3,50,24,3,1, (ArrayList) excelSheet3List);
-            emailService.sendFileMail("",subject,text,file2);
+            emailService.sendFileMail("1308467355@qq.com",subject,text,file2);
             if (file2.exists()){
                 file2.delete();
             }

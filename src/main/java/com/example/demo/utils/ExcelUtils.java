@@ -3,13 +3,18 @@ package com.example.demo.utils;
 import java.util.*;
 import java.io.*;
 
-import com.alibaba.druid.sql.visitor.functions.If;
 import com.example.demo.entity.ExcelSheet1;
 import com.example.demo.entity.ExcelSheet3;
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.poi.hssf.usermodel.*;
 import com.example.demo.entity.ExcelSheet2;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+
+
 import java.math.BigDecimal;
 import java.nio.file.Files;
 
@@ -87,32 +92,11 @@ public class ExcelUtils {
                 }
             }
         }
-//        ArrayList<Integer> arrayList = new ArrayList();
-//        for (int k = 0; k < newData.length; k++) {//遍历二维数组中的第一维度（行数）
-//            if (newData[k][0].toString() != "" || null==newData[k][0]) {//二维数组第k行的第一个值不等于空的字符串
-//                //计数器加1
-//                arrayList.add(k+1);//将数值传入List中
-//            }
-//        }
-//        for (int i = 0; i < arrayList.size(); i++) {//遍历List
-//            int region1;//设置合并区域
-//            int region2;
-//            //list集合的Count属性是多少个元素，由于i是从0开始的，所以i永远小于Count。
-//            //必须先将Count减一操作之后再和i进行比较。
-//            if (i < arrayList.size() - 1) {
-//                region1 = arrayList.get(i) + rowHead - 1;//代表数据中的第一个为Account Name
-//                region2 = arrayList.get(i + 1) + rowHead - 2;//代表数据中的下一个Account Name
-//                //所以要合并的区域为 region1+rowHead - 1 到 region2 -1 + rowHead -1
-//            } else {
-//                region1 = arrayList.get(i) + rowHead - 1;//代表数据中的第一个为Account Name
-//                region2 = newData.length + rowHead - 1;//首先得到所有数据的行值，然后再加上行头，-1之后就得到表格的最后一行
-//            }
-//            sheet.addMergedRegion(new CellRangeAddress(region1, region2, 1, 1));//将单元格进行合并
-//            sheet.addMergedRegion(new CellRangeAddress(region1, region2, 2, 2));
-//        }
+        setFontBold(newData,workbook,sheet,rowHead,columnHead);
         MergeCell(newData,1,sheet,rowHead,columnHead);
         MergeCell(newData,2,sheet,rowHead,columnHead);
         MergeCell(newData,3,sheet,rowHead,columnHead);
+
 
         FileOutputStream outputStream = new FileOutputStream(copyFile.getPath());
         workbook.write(outputStream);
@@ -121,10 +105,12 @@ public class ExcelUtils {
         File sourceFile = new File(copyFile.getPath());
         return sourceFile;
     }
+
     public static File ExcelCopy(String source) throws IOException {
-        long time = System.currentTimeMillis();
+        Double i = (Math.random() * Math.random() * System.currentTimeMillis());
+        String str = i.toString().substring(5, 11);
         File sourceFile = new File(source);
-        File destFile = new File(sourceFile.getParent() + time + sourceFile.getName());
+        File destFile = new File(sourceFile.getParent() + "\\副本" + str + sourceFile.getName().substring(sourceFile.getName().length() - 4));
         Files.copy(sourceFile.toPath(), destFile.toPath());
         return destFile;
     }
@@ -133,14 +119,14 @@ public class ExcelUtils {
      * @param excelList   一个excel list数据源
      * @param rowCount    该数据源的行数
      * @param columnCount 该数据源的列数
-     * @return
+     * @return Object[][] 将数据转换后的二维数组
      */
     public static Object[][] ListToArray(ArrayList excelList, int rowCount, int columnCount) {
         ArrayList<Object> arrayList = new ArrayList<>();
         Iterator iterator = excelList.listIterator();//使用迭代器获取数据源中的每个Excel实体类对象
-        if(iterator.next() instanceof ExcelSheet1){
+        if (iterator.next() instanceof ExcelSheet1) {
             iterator = excelList.listIterator();
-            while ((iterator.hasNext())){
+            while ((iterator.hasNext())) {
                 ExcelSheet1 excelSheet1 = (ExcelSheet1) iterator.next();
                 arrayList.add(excelSheet1.getReportLineName());
                 arrayList.add(excelSheet1.getBlank1());
@@ -185,8 +171,7 @@ public class ExcelUtils {
                 arrayList.add(excelSheet1.getDec1());
                 arrayList.add(excelSheet1.getPlan());
             }
-        }
-        else if (iterator.next() instanceof ExcelSheet2) {
+        } else if (iterator.next() instanceof ExcelSheet2) {
             iterator = excelList.listIterator();
             while (iterator.hasNext()) {
                 ExcelSheet2 excelSheet2 = (ExcelSheet2) iterator.next();
@@ -226,8 +211,8 @@ public class ExcelUtils {
             /*
             获取Excel实体类对象的各个数据，并将数据添加到新的ArrayList当中
              */
-                arrayList.add(excelSheet3.getAccount());
                 arrayList.add(excelSheet3.getVendor());
+                arrayList.add(excelSheet3.getAccount());
                 arrayList.add(excelSheet3.getBlk1());
                 arrayList.add(excelSheet3.getMtdActual());
                 arrayList.add(excelSheet3.getlYMtdActual());
@@ -258,26 +243,26 @@ public class ExcelUtils {
         /*
         对二维数组进行遍历，并将新的ArrayList当中保存的数据写入到数组中，这样子数组的结构和数据源一致
          */
-            for (int i = 0; i < rowCount; i++) {
-                for (int j = 0; j < columnCount; j++) {
-                    if (listIterator.hasNext()) {
-                        objects[i][j] = listIterator.next();
-                        if (null == objects[i][j]) {//判断数据是否为空，如果是，将数据改成空白字符串
-                            objects[i][j] = "";
-                        }
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < columnCount; j++) {
+                if (listIterator.hasNext()) {
+                    objects[i][j] = listIterator.next();
+                    if (null == objects[i][j]) {//判断数据是否为空，如果是，将数据改成空白字符串
+                        objects[i][j] = "";
                     }
                 }
             }
-            return objects;
         }
+        return objects;
+    }
 
-    public static void MergeCell(Object[][] newData,int col,HSSFSheet sheet,int rowHead,int columnHead){
+    public static void MergeCell(Object[][] newData, int col, HSSFSheet sheet, int rowHead, int columnHead) {
         ArrayList<Integer> arrayList = new ArrayList();
         for (int k = 0; k < newData.length; k++) {//遍历二维数组中的第一维度（行数）
             int num = col - columnHead;
-            if (newData[k][num].toString() != "" || null==newData[k][col]) {//二维数组第k行的第一个值不等于空的字符串
+            if (newData[k][num].toString() != "" || null == newData[k][col]) {//二维数组第k行的第一个值不等于空的字符串
                 //计数器加1
-                arrayList.add(k+1);//将数值传入List中
+                arrayList.add(k + 1);//将数值传入List中
             }
         }
         for (int i = 0; i < arrayList.size(); i++) {//遍历List
@@ -293,11 +278,58 @@ public class ExcelUtils {
                 region1 = arrayList.get(i) + rowHead - 1;//代表数据中的第一个为Account Name
                 region2 = newData.length + rowHead - 1;//首先得到所有数据的行值，然后再加上行头，-1之后就得到表格的最后一行
             }
-            if (region1==region2){
+            if (region1 == region2) {
                 continue;
-            }else sheet.addMergedRegion(new CellRangeAddress(region1, region2, col, col));//将单元格进行合并
+            } else sheet.addMergedRegion(new CellRangeAddress(region1, region2, col, col));//将单元格进行合并
+        }
+    }
+
+    /***
+     * @param newData 一个二维数组数据源
+     * @param workbook 公共的工作簿对象
+     * @param sheet 工作表对象
+     * @param rowHead 行头
+     * @param columnHead 列头
+     */
+    public static void setFontBold(Object[][] newData,HSSFWorkbook workbook,HSSFSheet sheet,int rowHead,int columnHead)  {
+        HSSFFont font = workbook.createFont(); //设置一个新的字体对象
+        HSSFCellStyle headStyle = workbook.createCellStyle();//新建样式对象
+        HSSFCellStyle defaultStyle = workbook.createCellStyle();
+        //XSSFColor color = new XSSFColor(Hex.decodeHex("#C0C0C0"),null);
+        //由于POI对于工作簿本身的样式对象是全局的，所以需要新建两个样式对象，对不同格式的单元格分别进行设置
+        ArrayList<Integer> list = new ArrayList();//使用集合来存放字体加粗的行数
+        for (int k = 0; k < newData.length; k++) {//遍历二维数组中的第一维度（行数）
+            for (int a = 0; a < 3; a++) {//我们的表格中的SHEET最多前面三列是文本数据，所以需要单独设置
+                if (newData[k][a].toString().contains("总计") || newData[k][a].toString().contains("Total")) {//二维数组第k行的第a个数据中包含有总计和Total的才需要加粗
+                    list.add(a);//将列数添加到集合中
+                    int boldRow = k + rowHead;//将二维数组中的位置转换为表格中要加粗的行
+                    int boldColumn = a + columnHead;//同上，改列
+                    HSSFRow row = sheet.getRow(boldRow);//获取这一行的row对象
+                    HSSFCell cell = row.getCell(boldColumn);//获取单个cell单元格对象
+                    headStyle.cloneStyleFrom(cell.getCellStyle());//将单元格格式复制到新的样式对象中，这样子也不会改变原有的样式
+                    font.setFontName("微软雅黑");//设置字体为微软雅黑
+                    font.setBold(true);//设置字体加粗
+                    headStyle.setFont(font);//将字体对象传递给样式对象中
+                    cell.setCellStyle(headStyle);//设置新的样式对象
+                }
+            }
+        }
+        for (int k = 0; k < newData.length; k++) {//遍历二维数组中的第一维度（行数）
+            for (int a=0;a<list.size();a++){//遍历集合，将集合中的行数拿出来
+                if (newData[k][list.get(a)].toString().contains("总计") || newData[k][list.get(a)].toString().contains("Total")){
+                    for (int j = 3; j < newData[0].length; j++) {//遍历剩下来的数值数据
+                        int boldRow = k + rowHead;
+                        int boldColumn = j + columnHead;
+                        HSSFRow row = sheet.getRow(boldRow);
+                        HSSFCell cell = row.getCell(boldColumn);
+                        defaultStyle.cloneStyleFrom(cell.getCellStyle());
+                        font.setFontName("微软雅黑");
+                        font.setBold(true);
+                        defaultStyle.setFont(font);
+                        cell.setCellStyle(defaultStyle);
+                    }
+                }
+            }
         }
     }
 }
-
-

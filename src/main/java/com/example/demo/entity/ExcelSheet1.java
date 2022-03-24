@@ -427,4 +427,52 @@ public class ExcelSheet1 {
     public void setPlan(double plan) {
         this.plan = plan;
     }
+
+    @Override
+    public String toString() {
+        return "ExcelSheet1{" +
+                "reportLineName='" + reportLineName + '\'' +
+                ", blank1='" + blank1 + '\'' +
+                ", mtdActual=" + mtdActual +
+                ", mtdPlan=" + mtdPlan +
+                ", changeVsPlan1=" + changeVsPlan1 +
+                ", lastYearMtdActual=" + lastYearMtdActual +
+                ", changeVsLastYear1=" + changeVsLastYear1 +
+                ", blank2='" + blank2 + '\'' +
+                ", ytdActual=" + ytdActual +
+                ", ytdPlan=" + ytdPlan +
+                ", changeVsPlan2=" + changeVsPlan2 +
+                ", lastYearYtdActual=" + lastYearYtdActual +
+                ", changeVsLastYear2=" + changeVsLastYear2 +
+                ", blank3='" + blank3 + '\'' +
+                ", leftInPlan=" + leftInPlan +
+                ", planRemaining=" + planRemaining +
+                ", jan=" + jan +
+                ", feb=" + feb +
+                ", mar=" + mar +
+                ", apr=" + apr +
+                ", may=" + may +
+                ", jun=" + jun +
+                ", jul=" + jul +
+                ", aug=" + aug +
+                ", sep=" + sep +
+                ", oct=" + oct +
+                ", nov=" + nov +
+                ", dec=" + dec +
+                ", actual=" + actual +
+                ", jan1=" + jan1 +
+                ", feb1=" + feb1 +
+                ", mar1=" + mar1 +
+                ", apr1=" + apr1 +
+                ", may1=" + may1 +
+                ", jun1=" + jun1 +
+                ", jul1=" + jul1 +
+                ", aug1=" + aug1 +
+                ", sep1=" + sep1 +
+                ", oct1=" + oct1 +
+                ", nov1=" + nov1 +
+                ", dec1=" + dec1 +
+                ", plan=" + plan +
+                '}';
+    }
 }

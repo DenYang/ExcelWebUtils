@@ -10,13 +10,13 @@
         <result column="blank1" jdbcType="VARCHAR" property="blank1" />
         <result column="MTD Actual" jdbcType="DOUBLE" property="mtdActual" />
         <result column="MTD Plan" jdbcType="DOUBLE" property="mtdPlan" />
-        <result column="Change vs. Plan1" jdbcType="DOUBLE" property="changeVsPlan1" />
+        <result column="Changevs.Plan1" jdbcType="DOUBLE" property="changeVsPlan1" />
         <result column="Last Year MTD Actual" jdbcType="DOUBLE" property="lastYearMtdActual" />
         <result column="Change vs. Last Year1" jdbcType="DOUBLE" property="changeVsLastYear1" />
         <result column="blank2" jdbcType="VARCHAR" property="blank2" />
         <result column="YTD Actual" jdbcType="DOUBLE" property="ytdActual" />
         <result column="YTD Plan" jdbcType="DOUBLE" property="ytdPlan" />
-        <result column="Change vs. Plan2" jdbcType="DOUBLE" property="changeVsPlan2" />
+        <result column="Changevs.Plan2" jdbcType="DOUBLE" property="changeVsPlan2" />
         <result column="Last Year YTD Actual" jdbcType="DOUBLE" property="lastYearYtdActual" />
         <result column="Change vs. Last Year2" jdbcType="DOUBLE" property="changeVsLastYear2" />
         <result column="blank3" jdbcType="VARCHAR" property="blank3" />
